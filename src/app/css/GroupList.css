@@ -1,0 +1,12 @@
+.first-filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.first-filter-name {
+  margin-bottom: 20px;
+}
+
+.accordion {
+  margin-bottom: 40px;
+}

@@ -1,0 +1,24 @@
+.searched-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  z-index: 1000;
+  border-radius: 10px;
+  transition: 0.5s;
+  border: 1px solid rgb(117, 117, 117);
+}
+
+.searched-item:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.searched-item:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.searched-price {
+  font-weight: 600;
+}

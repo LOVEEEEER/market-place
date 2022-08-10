@@ -1,0 +1,138 @@
+html {
+  color: #333333;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.product__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 75px;
+}
+
+.product__product-title {
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.product__product-price {
+  margin-bottom: 40px;
+  font-size: 35px;
+}
+
+.product__main-image {
+  width: 40%;
+  margin-right: 120px;
+}
+
+.product__product-buy_button {
+  margin-right: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 350px;
+  font-size: 20px;
+  color: #fff;
+  background-color: #ff6163;
+  border: 0;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+
+.bi-heart {
+  color: rgb(167, 167, 167);
+}
+
+.product__product-buy_button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.product__product-like_button {
+  padding: 13px;
+  background-color: #f7f7f7;
+  border: 0;
+  transition: 0.5s;
+}
+
+.product__product-like_button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.product__buttons-list {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.product__descriptions-item {
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.product__descriptions-name {
+  font-size: 23px;
+  font-weight: 100;
+  color: #5c5a5a;
+}
+
+.product__descriptions-list {
+  display: block;
+  margin-top: 40px;
+  width: 500px;
+}
+
+.product__descriptions-list {
+  position: relative;
+}
+
+.product__descriptions-item {
+  display: flex;
+  justify-content: space-between;
+  top: 100%;
+}
+
+.product__descriptions-item {
+  display: block;
+  display: flex;
+}
+
+.product__descriptions-item:hover {
+  cursor: pointer;
+}
+
+.product__descriptions-item:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+.product__show-description_block {
+  position: absolute;
+  display: block;
+  transform: translateY(-50%);
+  width: 400px;
+  padding-bottom: 15px;
+  top: 40px;
+  opacity: 0;
+  transition: 0.5s;
+  border-bottom: 1px solid #000;
+}
+
+.product__show-description_block.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.product__descriptions-item.active {
+  border: 0;
+  transform: scaleY(100%);
+}
+
+@media (max-width: 1000px) {
+  .product__container {
+    flex-direction: column;
+  }
+}

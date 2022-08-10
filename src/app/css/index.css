@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,100;1,300;1,900&display=swap");
+/* @font-face {
+	font-display: swap;
+	font-weight: 300;
+	font-family: "Roboto";
+	font-style: normal;
+	src: url(../fonts/Roboto-Light.woff2) format("woff2");
+}
+@font-face {
+	font-display: swap;
+	font-weight: 400;
+	font-family: "Roboto";
+	font-style: normal;
+	src: url(../fonts/Roboto-Regular.woff2) format("woff2");
+}
+@font-face {
+	font-display: swap;
+	font-weight: 500;
+	font-family: "Roboto";
+	font-style: normal;
+	src: url(../fonts/Roboto-Medium.woff2) format("woff2");
+}
+@font-face {
+	font-display: swap;
+	font-weight: 700;
+	font-family: "Roboto";
+	font-style: normal;
+	src: url(../fonts/Roboto-Bold.woff2) format("woff2");
+}
+@font-face {
+	font-display: swap;
+	font-weight: 400;
+	font-family: "PressStart";
+	font-style: normal;
+	src: url(../fonts/PressStart2P-Regular.woff2) format("woff2");
+} */
+
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1400px;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.block {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(255, 242, 220);
+  width: 400px;
+  transform: translateX(-100%);
+  transition: 0.5s;
+  z-index: 100;
+}
+
+.block.active {
+  transform: translate(0);
+}
+
+.loading-container {
+  width: 100%;
+}
