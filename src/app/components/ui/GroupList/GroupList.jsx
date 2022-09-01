@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "../css/GroupList.css";
-import { validator } from "../utils/validator";
-import {
-  TextField,
-  Button,
-  Accordion,
-  // Typography,
-  AccordionSummary,
-  AccordionDetails
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import "./GroupList.css";
+import { validator } from "../../../utils/validator";
+import { TextField, Button } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import PropTypes from "prop-types";
+
 const GroupList = ({ onFilter, filter, onSex, sex }) => {
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({
@@ -46,14 +39,21 @@ const GroupList = ({ onFilter, filter, onSex, sex }) => {
   }, [data]);
 
   const handleChange = ({ target }) => {
-    // onSex(target.value);
+    onSex(target.value);
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
   const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(data);
     onFilter(data);
+  };
+  const handleReset = () => {
+    onFilter({
+      firstInput: "1",
+      secondInput: "999999"
+    });
   };
   return (
     <>
@@ -64,45 +64,40 @@ const GroupList = ({ onFilter, filter, onSex, sex }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="first-filter">
-            <Accordion className="accordion">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                {/* <Typography>По цене:</Typography> */}
-              </AccordionSummary>
-              <AccordionDetails>
-                {/* <Typography> */}
-                <TextField
-                  id="outlined-basic"
-                  label="Начальная цена"
-                  name="firstInput"
-                  variant="outlined"
-                  value={data.firstInput}
-                  onChange={handleChange}
-                  error={errors.firstInput}
-                  style={{ marginBottom: "20px" }}
-                  helperText={errors.firstInput}
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="Конечная цена"
-                  name="secondInput"
-                  variant="outlined"
-                  value={data.secondInput}
-                  onChange={handleChange}
-                  error={errors.secondInput}
-                  style={{ marginBottom: "20px" }}
-                  helperText={errors.secondInput}
-                />
-                <Button type="submit" variant="contained" disabled={!isValid}>
-                  Contained
-                </Button>
-                {/* </Typography> */}
-              </AccordionDetails>
-            </Accordion>
-
+            <h3 className="filter-name">Фильтрация по цене:</h3>
+            <TextField
+              id="outlined-basic"
+              label="Начальная цена"
+              name="firstInput"
+              variant="outlined"
+              value={data.firstInput}
+              onChange={handleChange}
+              error={errors.firstInput}
+              style={{ marginBottom: "20px" }}
+              helperText={errors.firstInput}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Конечная цена"
+              name="secondInput"
+              variant="outlined"
+              value={data.secondInput}
+              onChange={handleChange}
+              error={errors.secondInput}
+              style={{ marginBottom: "20px" }}
+              helperText={errors.secondInput}
+            />
+            <div className="first-filter-buttons-wrapper">
+              <Button type="submit" variant="contained" disabled={!isValid}>
+                Фильтровать
+              </Button>
+              <Button type="button" variant="outlined" onClick={handleReset}>
+                Сбросить фильтр
+              </Button>
+            </div>
+          </div>
+          <div className="second-filter">
+            <h3 className="filter-name">Фильтрация по полу:</h3>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Пол</InputLabel>
               <Select
@@ -110,7 +105,8 @@ const GroupList = ({ onFilter, filter, onSex, sex }) => {
                 id="demo-simple-select"
                 label="Sex"
                 onChange={handleChange}
-                value={sex}
+                value={data.sex}
+                name="sex"
               >
                 <MenuItem value="all">Показать все</MenuItem>
                 <MenuItem value="male">Мужской</MenuItem>

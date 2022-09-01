@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { paginate } from "../utils/paginate";
-import "../css/Products.css";
-import api from "../api";
+import { paginate } from "../../../utils/paginate";
+import "./Products.css";
 import _ from "lodash";
-import Menu from "../components/Menu";
-import GroupList from "./GroupList";
+import api from "../../../api";
+import Menu from "../../common/Menu/Menu";
+import GroupList from "../../ui/GroupList/GroupList";
 import PropTypes from "prop-types";
-import ProductCardsList from "./ProductCardsList";
+import ProductCardsList from "../../ui/ProductCardsList";
 import { Pagination } from "@mui/material";
-import LoadingCard from "./LoadingCard";
-const Products = ({ value }) => {
+import LoadingCard from "../../ui/LoadingCard";
+import Search from "../../common/Search/Search";
+
+const ProductsPage = () => {
   const [clothes, setClothes] = useState();
-  const [sex, setSex] = useState();
+  const [sex, setSex] = useState("all");
+  const [value, setValue] = useState("");
   const [filteredClothes, setFilteredClothes] = useState();
   const [filter, setFilter] = useState({
     firstInput: "1",
@@ -40,6 +43,14 @@ const Products = ({ value }) => {
     }
   ]);
 
+  useEffect(() => {
+    api.clothes.fetchAll().then((data) => setClothes(data));
+  }, []);
+
+  const handleSearchQuery = ({ target }) => {
+    setValue(target.value);
+  };
+
   const getByPrice = (data) => {
     const filteredClothesByPrice = clothes.filter(
       (item) =>
@@ -49,13 +60,10 @@ const Products = ({ value }) => {
     setFilteredClothes(filteredClothesByPrice);
   };
 
-  const pageSize = 8;
-  useEffect(() => {
-    setClothes();
-    api.clothes.fetchAll(sex).then((data) => setClothes(data));
-  }, [sex]);
+  const pageSize = 10;
   const handleSex = (item) => {
     setSex(item);
+    console.log(clothes);
   };
 
   useEffect(() => {
@@ -101,56 +109,53 @@ const Products = ({ value }) => {
   const handleExit = () => {
     setOpenItems((prevState) => ({ ...prevState, filter: false }));
   };
-
   const handleFilter = (data) => {
     setFilter(data);
   };
 
   if (filteredClothes) {
-    const sortedUsers = sortBy
-      ? _.orderBy(filteredClothes, [sortBy.path], [sortBy.order])
-      : filteredClothes;
-
-    const filteredSortedUsers = clothes.filter((item) =>
+    const searchedClothes = filteredClothes.filter((item) =>
       item.title.toLowerCase().includes(value.toLowerCase())
     );
 
-    const searchedItems = value ? filteredSortedUsers : sortedUsers;
-    const userCrop = paginate(searchedItems, currentPage, pageSize);
-    const pageCount = Math.ceil(clothes.length / pageSize);
+    const filterBySexClothes = searchedClothes.filter(
+      (item) => item.sex === sex
+    ).length
+      ? searchedClothes.filter((item) => item.sex === sex)
+      : searchedClothes;
+
+    const sortedUsers = sortBy
+      ? _.orderBy(filterBySexClothes, [sortBy.path], [sortBy.order])
+      : filterBySexClothes;
+
+    const userCrop = paginate(sortedUsers, currentPage, pageSize);
+    const pageCount = Math.ceil(sortedUsers.length / pageSize);
     return (
       <section className="products">
         <div className="container products__container">
           <div className="foo">
             <div className="sort header__params products__categories-name">
-              <i
-                className="bi bi-sliders2"
-                onClick={() => handleOpenList("filter")}
-              ></i>
-              <span
-                className="header__params-name"
+              <div
+                className="filtration"
                 onClick={() => handleOpenList("filter")}
               >
-                Фильтрация
-              </span>
+                <i className="bi bi-sliders2"></i>
+                <span className="header__params-name">Фильтрация</span>
+              </div>
             </div>
 
-            <Menu status={openItems.filter.open} onExit={handleExit}>
-              <GroupList
-                onFilter={handleFilter}
-                filter={filter}
-                onSex={handleSex}
-                sex={sex}
-              />
-            </Menu>
+            <Search onChange={handleSearchQuery} value={value} />
 
             <div className="products__categories-name header__params sort">
-              <span
-                className="header__params-name"
+              <div
+                className="filtration"
                 onClick={() => handleOpenList("sort")}
               >
-                {sortBy ? sortBy.title : "Сортировка"}
-              </span>
+                <span className="header__params-name">
+                  {sortBy ? sortBy.title : "Сортировка"}
+                </span>
+                <i className="bi bi-filter"></i>
+              </div>
               <div
                 className={"select" + (openItems.sort.open ? " active" : "")}
               >
@@ -164,11 +169,16 @@ const Products = ({ value }) => {
                   </span>
                 ))}
               </div>
-              <i
-                className="bi bi-filter"
-                onClick={() => handleOpenList("sort")}
-              ></i>
             </div>
+
+            <Menu status={openItems.filter.open} onExit={handleExit}>
+              <GroupList
+                onFilter={handleFilter}
+                filter={filter}
+                onSex={handleSex}
+                sex={sex}
+              />
+            </Menu>
           </div>
           <div className="cards">
             {userCrop.length ? (
@@ -182,8 +192,7 @@ const Products = ({ value }) => {
               count={pageCount}
               page={currentPage}
               variant="outlined"
-              shape="rounded"
-              color="primary"
+              color="secondary"
               size="large"
               onChange={(e, page) => handlePageChange(page)}
               className="pagination"
@@ -195,16 +204,18 @@ const Products = ({ value }) => {
   }
   return (
     <>
-      <div className="cards">
-        <LoadingCard items={16} />
-        <LoadingCard items={16} />
+      <div className="container">
+        <div className="cards">
+          <LoadingCard items={6} />
+          <LoadingCard items={6} />
+        </div>
       </div>
     </>
   );
 };
 
-Products.propTypes = {
+ProductsPage.propTypes = {
   value: PropTypes.string
 };
 
-export default Products;
+export default ProductsPage;

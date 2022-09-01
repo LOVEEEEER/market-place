@@ -23,7 +23,7 @@
 }
 
 .logo {
-  width: 200px;
+  width: 170px;
 }
 
 /*  */
@@ -44,6 +44,11 @@
   height: 40px;
   border: 1px solid #000;
   border-radius: 10px;
+}
+
+.header__nav-buttons_wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .input-area {
@@ -114,6 +119,10 @@
 
 .header__menu-soc-link:hover {
   opacity: 0.5;
+}
+
+.header__auth-button:not(:last-child) {
+  margin-right: 20px;
 }
 
 .search-block {

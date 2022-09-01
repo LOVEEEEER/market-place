@@ -1,0 +1,21 @@
+.main__container {
+  position: relative;
+  background-image: url("https://paevskiydesign.ru/wp-content/uploads/2016/11/concept_butik_VERT-04-1920x1080.jpg");
+  height: 800px;
+}
+
+.main__advertising-block {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 400px;
+  padding: 20px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+}
+
+.main__advertising-text {
+margin-bottom: 20px;
+}

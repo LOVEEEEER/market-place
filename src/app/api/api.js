@@ -1,6 +1,7 @@
 const clothes = [
   {
     id: 1,
+    inBasket: false,
     title: "Бомбер красный",
     price: 109.95,
     description:
@@ -14,6 +15,7 @@ const clothes = [
   },
   {
     id: 2,
+    inBasket: false,
     title: "Пальто кашемировое",
     price: 22.3,
     description:
@@ -27,6 +29,7 @@ const clothes = [
   },
   {
     id: 3,
+    inBasket: false,
     title: "Футболка горчичная",
     price: 55.99,
     description:
@@ -40,6 +43,7 @@ const clothes = [
   },
   {
     id: 4,
+    inBasket: false,
     title: "Кардиган серый",
     price: 15.99,
     description:
@@ -53,6 +57,7 @@ const clothes = [
   },
   {
     id: 5,
+    inBasket: false,
     title: "Куртка с карманами",
     price: 695,
     description:
@@ -66,6 +71,7 @@ const clothes = [
   },
   {
     id: 6,
+    inBasket: false,
     title: "Пальто песочное",
     price: 168,
     description:
@@ -79,6 +85,7 @@ const clothes = [
   },
   {
     id: 7,
+    inBasket: false,
     title: "Джинсовая куртка синяя",
     price: 9.99,
     description:
@@ -92,6 +99,7 @@ const clothes = [
   },
   {
     id: 8,
+    inBasket: false,
     title: "Куртка с вишенками",
     price: 10.99,
     description:
@@ -105,6 +113,7 @@ const clothes = [
   },
   {
     id: 9,
+    inBasket: false,
     title: "Юбка длинная, желтая клетка",
     price: 64,
     description:
@@ -118,6 +127,7 @@ const clothes = [
   },
   {
     id: 10,
+    inBasket: false,
     title: "Платье кружевное, морковное",
     price: 109,
     description:
@@ -131,6 +141,7 @@ const clothes = [
   },
   {
     id: 11,
+    inBasket: false,
     title: "Платье в тонкую полоску, голубое",
     price: 109,
     description:
@@ -144,6 +155,7 @@ const clothes = [
   },
   {
     id: 12,
+    inBasket: false,
     title: "Платье красное в цветочек",
     price: 114,
     description:
@@ -157,6 +169,7 @@ const clothes = [
   },
   {
     id: 13,
+    inBasket: false,
     title: "Платье черное в цветочек",
     price: 599,
     description:
@@ -170,6 +183,7 @@ const clothes = [
   },
   {
     id: 14,
+    inBasket: false,
     title: "Платье воздушное, белое",
     price: 999.99,
     description:
@@ -183,6 +197,7 @@ const clothes = [
   },
   {
     id: 15,
+    inBasket: false,
     title: "Платье синее в цветочек",
     price: 56.99,
     description:
@@ -196,6 +211,7 @@ const clothes = [
   },
   {
     id: 17,
+    inBasket: false,
     title: "Комбинезон серый",
     price: 39.99,
     description:
@@ -209,6 +225,7 @@ const clothes = [
   },
   {
     id: 18,
+    inBasket: false,
     title: "Платье цветочное",
     price: 9.85,
     description:
@@ -222,6 +239,7 @@ const clothes = [
   },
   {
     id: 19,
+    inBasket: false,
     title: "Платье вечернее, розовое",
     price: 7.95,
     description:
@@ -235,6 +253,7 @@ const clothes = [
   },
   {
     id: 20,
+    inBasket: false,
     title: "Джинсовая куртка, бирюза",
     price: 12.99,
     description:
@@ -259,17 +278,11 @@ export const getItem = (id) => {
   });
 };
 
-export const fetchAll = (item) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const filteredClothesAsSex = item
-        ? clothes.filter((clothe) => clothe.sex === item)
-        : clothes;
-      if (filteredClothesAsSex.length) {
-        resolve(filteredClothesAsSex);
-      } else {
-        resolve(clothes);
-      }
-    }, 1000);
-  });
-};
+export function fetchAll() {
+  if (!localStorage.getItem("clothes")) {
+    localStorage.setItem("clothes", JSON.stringify(clothes));
+  }
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(JSON.parse(localStorage.getItem("clothes"))), 1000)
+  );
+}

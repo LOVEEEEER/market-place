@@ -1,0 +1,22 @@
+.first-filter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.first-filter-name {
+  margin-bottom: 20px;
+}
+
+.accordion {
+  margin-bottom: 40px;
+}
+
+.filter-name {
+  margin-bottom: 20px;
+}
+
+.first-filter-buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+}

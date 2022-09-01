@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-const ProductCardsList = ({ items }) => {
-  console.log(items);
+const ProductCardsList = ({ items, sex }) => {
+  const history = useHistory();
+  const handleToggleProductPage = (itemId) => {
+    history.push(`/products/${itemId}`);
+  };
   return (
     <>
       {items.map((item) => (
@@ -17,11 +20,10 @@ const ProductCardsList = ({ items }) => {
                 {item.price} $
               </a>
             </div>
-            <Link to={"/products/" + item.id}>
-              <div className="card-show">
-                <i className="bi bi-eye"></i>
-              </div>
-            </Link>
+            <i
+              onClick={() => handleToggleProductPage(item.id)}
+              className="bi bi-eye card-show"
+            ></i>
           </div>
         </div>
       ))}
@@ -30,7 +32,8 @@ const ProductCardsList = ({ items }) => {
 };
 
 ProductCardsList.propTypes = {
-  items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
+  items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  sex: PropTypes.string.isRequired
 };
 
 export default ProductCardsList;

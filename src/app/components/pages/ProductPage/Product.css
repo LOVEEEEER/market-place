@@ -105,6 +105,12 @@ html {
   cursor: pointer;
 }
 
+.product__product-buy_button.active {
+  background-color: transparent;
+  color: #000;
+  outline: 1px solid #ff6163;
+}
+
 .product__descriptions-item:not(:last-child) {
   margin-bottom: 30px;
 }

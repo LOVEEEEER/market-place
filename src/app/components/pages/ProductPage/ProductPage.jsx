@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import api from "../api";
-import "../css/Product.css";
+import api from "../../../api";
+import "./Product.css";
 import PropTypes from "prop-types";
 import { Rating, Typography } from "@mui/material";
 import LoadingProductPage from "./LoadingProductPage";
-const Product = ({ productId }) => {
+import { fromStorage } from "../../../utils/fromStorage";
+import { toStorage } from "../../../utils/toStorage";
+
+const ProductPage = ({ productId, ...rest }) => {
   const [item, setItem] = useState();
+  const [basket, setBasket] = useState();
   const [descriptions, setDescriptions] = useState([
     { name: "Описание", id: 1, open: false }
   ]);
@@ -19,6 +23,13 @@ const Product = ({ productId }) => {
       );
     });
   }, []);
+  useEffect(() => {
+    const clothes = fromStorage("clothes");
+    const product = clothes.findIndex(
+      (item) => item.id.toString() === productId
+    );
+    setBasket(clothes[product].inBasket);
+  }, []);
   const handleDescription = (itemId) => {
     const descriptionIndex = descriptions.findIndex(
       (item) => item.id === itemId
@@ -27,6 +38,15 @@ const Product = ({ productId }) => {
     copyOfDescriptions[descriptionIndex].open =
       !copyOfDescriptions[descriptionIndex].open;
     setDescriptions(copyOfDescriptions);
+  };
+  const handleBasket = () => {
+    const clothes = fromStorage("clothes");
+    const product = clothes.findIndex(
+      (item) => item.id.toString() === productId
+    );
+    clothes[product].inBasket = !clothes[product].inBasket;
+    toStorage("clothes", clothes);
+    setBasket((prevState) => !prevState);
   };
   if (item) {
     return (
@@ -38,8 +58,13 @@ const Product = ({ productId }) => {
               <h2 className="product__product-title">{item.title}</h2>
               <h1 className="product__product-price">{item.price} $</h1>
               <div className="product__buttons-list">
-                <button className="product__product-buy_button">
-                  В корзину
+                <button
+                  className={
+                    "product__product-buy_button " + (basket ? "active" : "")
+                  }
+                  onClick={handleBasket}
+                >
+                  {basket ? "Удалить из корзины" : "Добавить в корзину"}
                 </button>
                 <button className="product__product-like_button">
                   <i className="bi bi-heart"></i>
@@ -91,8 +116,8 @@ const Product = ({ productId }) => {
   return <LoadingProductPage />;
 };
 
-Product.propTypes = {
+ProductPage.propTypes = {
   productId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
-export default Product;
+export default ProductPage;

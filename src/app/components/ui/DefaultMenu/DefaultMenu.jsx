@@ -1,54 +1,46 @@
 import React from "react";
-import { Switch } from "@mui/material";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const DefaultMenu = ({ theme, onChangeTheme }) => {
-  const handleTheme = (status) => {
-    onChangeTheme(status);
-  };
+const DefaultMenu = () => {
   return (
     <div className="header__menu-container menu-container">
       <div className="header__name-block menu-name-block">
         <h2 className="header__menu-name menu-name">Меню</h2>
-        <label htmlFor="#">Смена темы</label>
-        <Switch
-          checked={!(theme === "light")}
-          onChange={(e, status) => handleTheme(status)}
-        />
       </div>
 
       <div className="header__head-menu">
         <h3>Вверхнее меню</h3>
         <ul className="header__head-menu-list">
           <li className="header__head-menu-item">
-            <a href="#" className="header__head-menu-link">
+            <Link to="/catalog" className="header__head-menu-link">
               Каталог
-            </a>
+            </Link>
           </li>
           <li className="header__head-menu-item">
-            <a href="#" className="header__head-menu-link">
+            <Link to="/about" className="header__head-menu-link">
               О компании
-            </a>
+            </Link>
           </li>
           <li className="header__head-menu-item">
-            <a href="#" className="header__head-menu-link">
+            <Link to="/contacts" className="header__head-menu-link">
               Контакты
-            </a>
+            </Link>
           </li>
           <li className="header__head-menu-item">
-            <a href="#" className="header__head-menu-link">
+            <Link to="/delivery" className="header__head-menu-link">
               Доставка
-            </a>
+            </Link>
           </li>
           <li className="header__head-menu-item">
-            <a href="#" className="header__head-menu-link">
+            <Link to="/pay" className="header__head-menu-link">
               Оплата
-            </a>
+            </Link>
           </li>
           <li className="header__head-menu-item">
-            <a href="#" className="header__head-menu-link">
+            <Link to="/cabinet" className="header__head-menu-link">
               Личный кабинет
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
